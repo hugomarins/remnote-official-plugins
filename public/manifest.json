@@ -1,0 +1,22 @@
+{
+  "manifestVersion": 1,
+  "id": "universal_descriptors_input",
+  "name": "Universal Descriptors Quick-Input Fork",
+  "author": "mfranzs; fork by Hugo Marins",
+  "repoUrl": "https://github.com/hugomarins/remnote-official-plugins",
+  "version": {
+    "major": 0,
+    "minor": 0,
+    "patch": 1
+  },
+  "enableOnMobile": false,
+  "description": "Provides a ~ shortcut for quickly entering Universal Descriptors",
+  "requestNative": true,
+  "requiredScopes": [
+    {
+      "type": "All",
+      "level": "ReadCreateModifyDelete"
+    }
+  ],
+  "unlisted": true
+}

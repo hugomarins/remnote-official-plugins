@@ -160,14 +160,11 @@ function AutocompletePopup() {
     }
   }, [lastPartialWord]);
 
-  return (
-    <div className={clsx("p-[3px] rounded-lg", hidden && "hidden")}>
-      <div
-        className={clsx(
+  return ( <div className={clsx("p-[3px] rounded-lg", hidden && "hidden")}>
+      <div className={clsx(
           "flex flex-col content-start gap-[0.5] w-full box-border p-2",
           "rounded-lg rn-clr-background-primary rn-clr-content-primary shadow-md border border-gray-100"
-        )}
-      >
+        )}>
         {matches.map((word, idx) => (
           <div
             key={word.aliasId}
