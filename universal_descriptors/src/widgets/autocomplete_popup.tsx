@@ -55,7 +55,7 @@ function AutocompletePopup() {
 
   const universalSlots: UniversalSlot[] =
     useTracker(async (r) => {
-      const tilde = await r.rem.findByName(["~"], null);
+      const tilde = await r.rem.findByName(["~Universal Descriptors"], null);
       const universalSlotChildren = (await tilde?.getChildrenRem()) || [];
 
       return sortBy(
