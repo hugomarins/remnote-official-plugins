@@ -8,7 +8,7 @@ Read about Universal Descriptors here: https://help.remnote.com/en/articles/6030
 
 Setup
 
-- Create a Rem called "~" and add children beneath it. These Universal Descriptors will automatically be suggested while searching
+- Create a Rem called "~Universal Descriptors" and add children beneath it. These Universal Descriptors will automatically be suggested while searching
 
 Usage:
 
