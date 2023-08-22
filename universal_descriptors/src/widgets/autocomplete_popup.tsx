@@ -16,6 +16,7 @@ import {
   insertSelectedKeyId,
   selectNextKeyId,
   selectPrevKeyId,
+  universalDescriptorsHomeId,
 } from "../lib/constants";
 import { useSyncWidgetPositionWithCaret } from "../lib/hooks";
 
@@ -55,7 +56,7 @@ function AutocompletePopup() {
 
   const universalSlots: UniversalSlot[] =
     useTracker(async (r) => {
-      const tilde = await r.rem.findByName(["~Universal Descriptors"], null);
+      const tilde = await r.rem.findByName([universalDescriptorsHomeId], null);
       const universalSlotChildren = (await tilde?.getChildrenRem()) || [];
 
       return sortBy(
@@ -104,6 +105,10 @@ function AutocompletePopup() {
   const insertSelectedKey = useTracker(
     async (reactivePlugin) =>
       await reactivePlugin.settings.getSetting(insertSelectedKeyId)
+  ) as string;
+  const universalDescriptorsHomeId = useTracker(
+    async (reactivePlugin) =>
+      await reactivePlugin.settings.getSetting(universalDescriptorsHomeId)
   ) as string;
 
   // Steal autocomplete navigation and insertion keys from the editor
