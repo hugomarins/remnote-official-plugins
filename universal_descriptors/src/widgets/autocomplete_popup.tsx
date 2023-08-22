@@ -106,10 +106,6 @@ function AutocompletePopup() {
     async (reactivePlugin) =>
       await reactivePlugin.settings.getSetting(insertSelectedKeyId)
   ) as string;
-  const universalDescriptorsHomeId = useTracker(
-    async (reactivePlugin) =>
-      await reactivePlugin.settings.getSetting(universalDescriptorsHomeId)
-  ) as string;
 
   // Steal autocomplete navigation and insertion keys from the editor
   // while the floating autocomplete window is open.
