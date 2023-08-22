@@ -54,9 +54,11 @@ function AutocompletePopup() {
       : ` (${await plugin.richText.toString(r.text)})`;
   }
 
+  // no futuro, usar const tilde = await r.rem.findByName([universalDescriptorsHomeId], null); (ainda não funcionou)
+
   const universalSlots: UniversalSlot[] =
     useTracker(async (r) => {
-      const tilde = await r.rem.findByName([universalDescriptorsHomeId], null);
+      const tilde = await r.rem.findByName(["~Universal Descriptors"], null);
       const universalSlotChildren = (await tilde?.getChildrenRem()) || [];
 
       return sortBy(
