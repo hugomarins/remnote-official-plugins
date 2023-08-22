@@ -1,27 +1,26 @@
 {
   "manifestVersion": 1,
-  "id": "demo_autocomplete",
-  "name": "Autocomplete",
-  "author": "Jamesb",
+  "id": "demo_autofill_tables",
+  "name": "AI Autofill Tables",
+  "author": "RemNote",
   "repoUrl": "https://github.com/remnoteio/remnote-official-plugins",
   "enableOnMobile": false,
   "version": {
     "major": 0,
-    "minor": 8,
-    "patch": 9
+    "minor": 2,
+    "patch": 10
   },
-  "theme": [],
   "minimumRemNoteVersion": {
     "major": 1,
     "minor": 8,
     "patch": 18
   },
-  "description": "Get autocomplete suggestions based on words in the current document.",
+  "description": "Autofill table cells.",
   "requestNative": true,
   "requiredScopes": [
     {
       "type": "All",
-      "level": "ReadCreateModifyDelete"
+      "level": "ReadCreateModify"
     }
   ]
 }
