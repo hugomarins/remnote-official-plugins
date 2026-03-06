@@ -41,7 +41,7 @@ Tag any Rem with "No Hierarchy" (using the command). Any ancestors will be hidde
 
 ### Hide Parent
 
-Tag any Rem with "Hide Parent" (using the command `Hide Parent` or `/hp`)). Its immediate parent will be hidden on the front of the flashcard, but revealed on the back. (Similar to **Hide in Queue**, but instead of tagging the parent Rem, the user tags the specific flashcard Rem, so that other flashcards descendants of the same parent Rem are not affected.)
+Tag any Rem with "Hide Parent" (using the command `Hide Parent` or `/hp`). Its immediate parent will be hidden on the front of the flashcard, but revealed on the back. (Similar to **Hide in Queue**, but instead of tagging the parent Rem, the user tags the specific flashcard Rem, so that other flashcards descendants of the same parent Rem are not affected.)
 
 **Editor:**
 <br/>
