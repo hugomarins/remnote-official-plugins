@@ -1,12 +1,12 @@
 import {
   AppEvents,
-  Rem,
+  PluginRem as Rem,
   renderWidget,
   RichTextInterface,
   useAPIEventListener,
   usePlugin,
   useRunAsync,
-  useTracker,
+  useTrackerPlugin as useTracker,
   WidgetLocation,
 } from "@remnote/plugin-sdk";
 import clsx from "clsx";
@@ -39,8 +39,8 @@ function AutocompletePopup() {
       [rem, ...(await rem.getAliases())].map(async (r: Rem) => ({
         _id: rem._id,
         aliasId: r._id,
-        matchText: (await plugin.richText.toString(r.text)).trim(),
-        text: `${await plugin.richText.toString(rem.text)} ${await aliasText(
+        matchText: (await plugin.richText.toString(r.text || [])).trim(),
+        text: `${await plugin.richText.toString(rem.text || [])} ${await aliasText(
           rem,
           r
         )}`,
@@ -51,7 +51,7 @@ function AutocompletePopup() {
   async function aliasText(rem: Rem, r: Rem) {
     return rem._id == r._id
       ? ""
-      : ` (${await plugin.richText.toString(r.text)})`;
+      : ` (${await plugin.richText.toString(r.text || [])})`;
   }
 
   // no futuro, usar const tilde = await r.rem.findByName([universalDescriptorsHomeId], null); (ainda não funcionou)
@@ -78,12 +78,12 @@ function AutocompletePopup() {
 
   const matches: UniversalSlot[] = lastPartialWord?.startsWith("~")
     ? // _.sortBy(
-      universalSlots.filter((u) =>
-        u.matchText
-          .replaceAll("~", "")
-          .toLowerCase()
-          .startsWith(lastPartialWord.toLowerCase().substring(1))
-      )
+    universalSlots.filter((u) =>
+      u.matchText
+        .replaceAll("~", "")
+        .toLowerCase()
+        .startsWith(lastPartialWord.toLowerCase().substring(1))
+    )
     : [];
 
   const hidden = matches.length == 0;
@@ -134,17 +134,40 @@ function AutocompletePopup() {
     }
   });
 
-  const updateLastPartialWord = async (newText: RichTextInterface) => {
-    const selection = await plugin.editor.getSelectedText();
-    if (!selection) return;
-    const prevLine: string | undefined = await plugin.richText.toMarkdown(
-      await plugin.richText.substring(newText, 0, selection.range.start)
-    );
+  const updateLastPartialWord = async (newText: RichTextInterface | undefined) => {
+    try {
+      const selection = await plugin.editor.getSelectedText();
+      if (!selection || typeof selection.range?.start !== 'number') return;
 
-    const i = prevLine?.lastIndexOf("~");
-    const lpw =
-      i !== undefined ? prevLine?.substring(i)?.toLowerCase() : undefined;
-    setLastPartialWord(lpw);
+      let textToUse = newText;
+      if (!textToUse || (Array.isArray(textToUse) && textToUse.length === 0)) {
+        const focusedRem = await plugin.focus.getFocusedRem();
+        if (focusedRem) {
+          textToUse = focusedRem.text;
+        } else {
+          return;
+        }
+      }
+
+      if (!textToUse || (Array.isArray(textToUse) && textToUse.length === 0)) {
+        setLastPartialWord(undefined);
+        return;
+      }
+
+      const prevLine: string | undefined = await plugin.richText.toMarkdown(
+        await plugin.richText.substring(textToUse, 0, selection.range.start)
+      );
+
+      const i = prevLine?.lastIndexOf("~");
+      if (i !== undefined && i >= 0) {
+        const lpw = prevLine.substring(i).toLowerCase();
+        setLastPartialWord(lpw);
+      } else {
+        setLastPartialWord(undefined);
+      }
+    } catch (e) {
+      console.warn("Failed to update last partial word:", e);
+    }
   };
 
   useAPIEventListener(
