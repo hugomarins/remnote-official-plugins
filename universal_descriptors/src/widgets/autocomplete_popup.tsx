@@ -10,7 +10,7 @@ import {
   WidgetLocation,
 } from "@remnote/plugin-sdk";
 import clsx from "clsx";
-import * as R from "react";
+import React from "react";
 import { sortBy, } from "remeda";
 import {
   insertSelectedKeyId,
@@ -74,7 +74,7 @@ function AutocompletePopup() {
   // lastPartialWord to filter down the autocomplete suggestions to
   // show in the popup window.
 
-  const [lastPartialWord, setLastPartialWord] = R.useState<string>();
+  const [lastPartialWord, setLastPartialWord] = React.useState<string>();
 
   const matches: UniversalSlot[] = lastPartialWord?.startsWith("~")
     ? // _.sortBy(
@@ -112,7 +112,7 @@ function AutocompletePopup() {
   // Steal autocomplete navigation and insertion keys from the editor
   // while the floating autocomplete window is open.
 
-  R.useEffect(() => {
+  React.useEffect(() => {
     const keys = [selectNextKey, selectPrevKey, insertSelectedKey];
     if (!floatingWidgetId) {
       return;
@@ -178,34 +178,34 @@ function AutocompletePopup() {
     }
   );
 
-  const [selectedIdx, setSelectedIdx] = R.useState(0);
+  const [selectedIdx, setSelectedIdx] = React.useState(0);
 
-  R.useEffect(() => {
+  React.useEffect(() => {
     if (!hidden) {
       setSelectedIdx(0);
     }
   }, [lastPartialWord]);
 
-  return ( <div className={clsx("p-[3px] rounded-lg", hidden && "hidden")}>
-      <div className={clsx(
-          "flex flex-col content-start gap-[0.5] w-full box-border p-2",
-          "rounded-lg rn-clr-background-primary rn-clr-content-primary shadow-md border border-gray-100"
-        )}>
-        {matches.map((word, idx) => (
-          <div
-            key={word.aliasId}
-            className={clsx(
-              "rounded-md p-2 truncate",
-              idx === selectedIdx && "rn-clr-background--hovered"
-            )}
-            onMouseEnter={() => setSelectedIdx(idx)}
-            onClick={() => selectResult(word)}
-          >
-            {word.text}
-          </div>
-        ))}
-      </div>
+  return (<div className={clsx("p-[3px] rounded-lg", hidden && "hidden")}>
+    <div className={clsx(
+      "flex flex-col content-start gap-[0.5] w-full box-border p-2",
+      "rounded-lg rn-clr-background-primary rn-clr-content-primary shadow-md border border-gray-100"
+    )}>
+      {matches.map((word, idx) => (
+        <div
+          key={word.aliasId}
+          className={clsx(
+            "rounded-md p-2 truncate",
+            idx === selectedIdx && "rn-clr-background--hovered"
+          )}
+          onMouseEnter={() => setSelectedIdx(idx)}
+          onClick={() => selectResult(word)}
+        >
+          {word.text}
+        </div>
+      ))}
     </div>
+  </div>
   );
 
   function selectAdjacentWord(direction: "up" | "down") {
