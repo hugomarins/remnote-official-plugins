@@ -53,20 +53,20 @@ const CSS = `
 
 /* Hide Parent Styles */
 /* Target the immediate parent of the question rem */
-.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .rn-queue-rem,
-.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .rn-flashcard-delimiter,
-.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .RichTextViewer {
+.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .rn-queue-rem,
+.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .rn-flashcard-delimiter,
+.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .RichTextViewer {
   display: none !important;
 }
 
 /* Add "Hidden in queue" text for Parent */
-.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .rn-queue-rem > .rn-bullet-container,
-.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .rn-queue-rem > .rem-bullet__document {
+.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .rn-queue-rem > .rn-bullet-container,
+.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .rn-queue-rem > .rem-bullet__document {
   position: relative;
 }
 
-.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .rn-queue-rem > .rn-bullet-container:after,
-.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .rn-queue-rem > .rem-bullet__document:after {
+.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .rn-queue-rem > .rn-bullet-container:after,
+.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .rn-queue-rem > .rem-bullet__document:after {
   content: "Hidden in queue";
   opacity: .3;
   white-space: nowrap;
@@ -77,20 +77,20 @@ const CSS = `
 
 /* Hide GrandParent Styles */
 /* Target the grandparent of the question rem */
-.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .rn-queue-rem,
-.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .rn-flashcard-delimiter,
-.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .RichTextViewer {
+.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .rn-queue-rem,
+.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .rn-flashcard-delimiter,
+.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .RichTextViewer {
   display: none !important;
 }
 
 /* Add "Hidden in queue" text for GrandParent */
-.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .rn-queue-rem > .rn-bullet-container,
-.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .rn-queue-rem > .rem-bullet__document {
+.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .rn-queue-rem > .rn-bullet-container,
+.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .rn-queue-rem > .rem-bullet__document {
   position: relative;
 }
 
-.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .rn-queue-rem > .rn-bullet-container:after,
-.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .rn-queue-rem > .rem-bullet__document:after {
+.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .rn-queue-rem > .rn-bullet-container:after,
+.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .rn-queue-rem > .rem-bullet__document:after {
   content: "Hidden in queue";
   opacity: .3;
   white-space: nowrap;
