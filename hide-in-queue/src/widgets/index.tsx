@@ -51,11 +51,61 @@ const CSS = `
   display: none;
 }
 
+/* Hide Parent Styles */
+/* Target the immediate parent of the question rem */
+.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .rn-queue-rem,
+.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .rn-flashcard-delimiter,
+.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .RichTextViewer {
+  display: none !important;
+}
+
+/* Add "Hidden in queue" text for Parent */
+.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .rn-queue-rem > .rn-bullet-container,
+.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .rn-queue-rem > .rem-bullet__document {
+  position: relative;
+}
+
+.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .rn-queue-rem > .rn-bullet-container:after,
+.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .rn-queue-rem > .rem-bullet__document:after {
+  content: "Hidden in queue";
+  opacity: .3;
+  white-space: nowrap;
+  position: absolute;
+  left: 25px;
+  top: 0;
+}
+
+/* Hide GrandParent Styles */
+/* Target the grandparent of the question rem */
+.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .rn-queue-rem,
+.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .rn-flashcard-delimiter,
+.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .RichTextViewer {
+  display: none !important;
+}
+
+/* Add "Hidden in queue" text for GrandParent */
+.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .rn-queue-rem > .rn-bullet-container,
+.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .rn-queue-rem > .rem-bullet__document {
+  position: relative;
+}
+
+.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .rn-queue-rem > .rn-bullet-container:after,
+.rn-queue__content:not(.rn-queue__content--answer-shown) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .rn-queue-rem > .rem-bullet__document:after {
+  content: "Hidden in queue";
+  opacity: .3;
+  white-space: nowrap;
+  position: absolute;
+  left: 25px;
+  top: 0;
+}
+
 `;
 
 const HIDE_IN_QUEUE_POWERUP_CODE = "hideInQueue";
 const REMOVE_FROM_QUEUE_POWERUP_CODE = "removeFromQueue";
 const NO_HIERARCHY_POWERUP_CODE = "noHierarchy";
+const HIDE_PARENT_POWERUP_CODE = "hideParent";
+const HIDE_GRANDPARENT_POWERUP_CODE = "hideGrandParent";
 
 async function onActivate(plugin: ReactRNPlugin) {
 	await plugin.app.registerPowerup({
@@ -131,9 +181,47 @@ async function onActivate(plugin: ReactRNPlugin) {
 		},
 	});
 
+	await plugin.app.registerPowerup({
+		name: "Hide Parent",
+		code: HIDE_PARENT_POWERUP_CODE,
+		description: "Hides the immediate parent in the queue view.",
+		options: {
+			slots: [],
+		},
+	});
+
+	await plugin.app.registerCommand({
+		id: `${HIDE_PARENT_POWERUP_CODE}Cmd`,
+		name: "Hide Parent",
+		description: `Hide the immediate parent of the tagged Rem in the queue.`,
+		quickCode: "hp",
+		action: async () => {
+			await runAddPowerupCommand(HIDE_PARENT_POWERUP_CODE);
+		},
+	});
+
+	await plugin.app.registerPowerup({
+		name: "Hide Grandparent",
+		code: HIDE_GRANDPARENT_POWERUP_CODE,
+		description: "Hides the grandparent in the queue view.",
+		options: {
+			slots: [],
+		},
+	});
+
+	await plugin.app.registerCommand({
+		id: `${HIDE_GRANDPARENT_POWERUP_CODE}Cmd`,
+		name: "Hide Grandparent",
+		description: `Hide the grandparent of the tagged Rem in the queue.`,
+		quickCode: "hgp",
+		action: async () => {
+			await runAddPowerupCommand(HIDE_GRANDPARENT_POWERUP_CODE);
+		},
+	});
+
 	await plugin.app.registerCSS("powerup", CSS);
 }
 
-async function onDeactivate(_: ReactRNPlugin) {}
+async function onDeactivate(_: ReactRNPlugin) { }
 
 declareIndexPlugin(onActivate, onDeactivate);
