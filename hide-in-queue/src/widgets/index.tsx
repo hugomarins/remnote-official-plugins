@@ -52,21 +52,20 @@ const CSS = `
 }
 
 /* Hide Parent Styles */
-/* Target the immediate parent of the question rem */
-.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .rn-queue-rem,
-.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .rn-flashcard-delimiter,
-.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .RichTextViewer {
+.rn-queue__content--answer-hidden .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hide-parent"]) > .RichTextViewer,
+.rn-queue__content--answer-hidden .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hide-parent"]) > .rn-flashcard-delimiter,
+.rn-queue__content--answer-hidden .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hide-parent"]) > .rn-queue-rem > .RichTextViewer,
+.rn-queue__content--answer-hidden .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hide-parent"]) > .rem-bullet__document {
   display: none !important;
 }
 
-/* Add "Hidden in queue" text for Parent */
-.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .rn-queue-rem > .rn-bullet-container,
-.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .rn-queue-rem > .rem-bullet__document {
+.rn-queue__content--answer-hidden .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hide-parent"]) > .rn-queue-rem > .rn-bullet-container,
+.rn-queue__content--answer-hidden .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hide-parent"]) > .rn-queue-rem > .rem-bullet__document {
   position: relative;
 }
 
-.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .rn-queue-rem > .rn-bullet-container:after,
-.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hideParent"]) > .rn-queue-rem > .rem-bullet__document:after {
+.rn-queue__content--answer-hidden .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hide-parent"]) > .rn-queue-rem > .rn-bullet-container:after,
+.rn-queue__content--answer-hidden .indented-rem:has(> .rn-question-rem[data-queue-rem-container-tags~="hide-parent"]) > .rn-queue-rem > .rem-bullet__document:after {
   content: "Hidden in queue";
   opacity: .3;
   white-space: nowrap;
@@ -76,21 +75,20 @@ const CSS = `
 }
 
 /* Hide GrandParent Styles */
-/* Target the grandparent of the question rem */
-.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .rn-queue-rem,
-.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .rn-flashcard-delimiter,
-.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .RichTextViewer {
+.rn-queue__content--answer-hidden .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hide-grandparent"]) > .RichTextViewer,
+.rn-queue__content--answer-hidden .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hide-grandparent"]) > .rn-flashcard-delimiter,
+.rn-queue__content--answer-hidden .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hide-grandparent"]) > .rn-queue-rem > .RichTextViewer,
+.rn-queue__content--answer-hidden .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hide-grandparent"]) > .rem-bullet__document {
   display: none !important;
 }
 
-/* Add "Hidden in queue" text for GrandParent */
-.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .rn-queue-rem > .rn-bullet-container,
-.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .rn-queue-rem > .rem-bullet__document {
+.rn-queue__content--answer-hidden .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hide-grandparent"]) > .rn-queue-rem > .rn-bullet-container,
+.rn-queue__content--answer-hidden .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hide-grandparent"]) > .rn-queue-rem > .rem-bullet__document {
   position: relative;
 }
 
-.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .rn-queue-rem > .rn-bullet-container:after,
-.rn-queue__content:not(.rn-queue__content--answer-revealed) > .rn-queue-rem-hierarchy > .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hideGrandParent"]) > .rn-queue-rem > .rem-bullet__document:after {
+.rn-queue__content--answer-hidden .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hide-grandparent"]) > .rn-queue-rem > .rn-bullet-container:after,
+.rn-queue__content--answer-hidden .indented-rem:has(> .indented-rem > .rn-question-rem[data-queue-rem-container-tags~="hide-grandparent"]) > .rn-queue-rem > .rem-bullet__document:after {
   content: "Hidden in queue";
   opacity: .3;
   white-space: nowrap;
@@ -105,7 +103,7 @@ const HIDE_IN_QUEUE_POWERUP_CODE = "hideInQueue";
 const REMOVE_FROM_QUEUE_POWERUP_CODE = "removeFromQueue";
 const NO_HIERARCHY_POWERUP_CODE = "noHierarchy";
 const HIDE_PARENT_POWERUP_CODE = "hideParent";
-const HIDE_GRANDPARENT_POWERUP_CODE = "hideGrandParent";
+const HIDE_GRANDPARENT_POWERUP_CODE = "hideGrandparent";
 
 async function onActivate(plugin: ReactRNPlugin) {
 	await plugin.app.registerPowerup({
