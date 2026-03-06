@@ -1,21 +1,22 @@
 import {
   AppEvents,
-  Rem,
+  PluginRem as Rem,
   renderWidget,
   RichTextInterface,
   useAPIEventListener,
   usePlugin,
   useRunAsync,
-  useTracker,
+  useTrackerPlugin as useTracker,
   WidgetLocation,
 } from "@remnote/plugin-sdk";
 import clsx from "clsx";
-import * as R from "react";
+import React from "react";
 import { sortBy, } from "remeda";
 import {
   insertSelectedKeyId,
   selectNextKeyId,
   selectPrevKeyId,
+  universalDescriptorsHomeId,
 } from "../lib/constants";
 import { useSyncWidgetPositionWithCaret } from "../lib/hooks";
 
@@ -38,8 +39,8 @@ function AutocompletePopup() {
       [rem, ...(await rem.getAliases())].map(async (r: Rem) => ({
         _id: rem._id,
         aliasId: r._id,
-        matchText: (await plugin.richText.toString(r.text)).trim(),
-        text: `${await plugin.richText.toString(rem.text)} ${await aliasText(
+        matchText: (await plugin.richText.toString(r.text || [])).trim(),
+        text: `${await plugin.richText.toString(rem.text || [])} ${await aliasText(
           rem,
           r
         )}`,
@@ -50,12 +51,14 @@ function AutocompletePopup() {
   async function aliasText(rem: Rem, r: Rem) {
     return rem._id == r._id
       ? ""
-      : ` (${await plugin.richText.toString(r.text)})`;
+      : ` (${await plugin.richText.toString(r.text || [])})`;
   }
+
+  // no futuro, usar const tilde = await r.rem.findByName([universalDescriptorsHomeId], null); (ainda não funcionou)
 
   const universalSlots: UniversalSlot[] =
     useTracker(async (r) => {
-      const tilde = await r.rem.findByName(["~"], null);
+      const tilde = await r.rem.findByName(["~Universal Descriptors"], null);
       const universalSlotChildren = (await tilde?.getChildrenRem()) || [];
 
       return sortBy(
@@ -71,16 +74,16 @@ function AutocompletePopup() {
   // lastPartialWord to filter down the autocomplete suggestions to
   // show in the popup window.
 
-  const [lastPartialWord, setLastPartialWord] = R.useState<string>();
+  const [lastPartialWord, setLastPartialWord] = React.useState<string>();
 
   const matches: UniversalSlot[] = lastPartialWord?.startsWith("~")
     ? // _.sortBy(
-      universalSlots.filter((u) =>
-        u.matchText
-          .replaceAll("~", "")
-          .toLowerCase()
-          .startsWith(lastPartialWord.toLowerCase().substring(1))
-      )
+    universalSlots.filter((u) =>
+      u.matchText
+        .replaceAll("~", "")
+        .toLowerCase()
+        .startsWith(lastPartialWord.toLowerCase().substring(1))
+    )
     : [];
 
   const hidden = matches.length == 0;
@@ -109,7 +112,7 @@ function AutocompletePopup() {
   // Steal autocomplete navigation and insertion keys from the editor
   // while the floating autocomplete window is open.
 
-  R.useEffect(() => {
+  React.useEffect(() => {
     const keys = [selectNextKey, selectPrevKey, insertSelectedKey];
     if (!floatingWidgetId) {
       return;
@@ -131,17 +134,40 @@ function AutocompletePopup() {
     }
   });
 
-  const updateLastPartialWord = async (newText: RichTextInterface) => {
-    const selection = await plugin.editor.getSelectedText();
-    if (!selection) return;
-    const prevLine: string | undefined = await plugin.richText.toMarkdown(
-      await plugin.richText.substring(newText, 0, selection.range.start)
-    );
+  const updateLastPartialWord = async (newText: RichTextInterface | undefined) => {
+    try {
+      const selection = await plugin.editor.getSelectedText();
+      if (!selection || typeof selection.range?.start !== 'number') return;
 
-    const i = prevLine?.lastIndexOf("~");
-    const lpw =
-      i !== undefined ? prevLine?.substring(i)?.toLowerCase() : undefined;
-    setLastPartialWord(lpw);
+      let textToUse = newText;
+      if (!textToUse || (Array.isArray(textToUse) && textToUse.length === 0)) {
+        const focusedRem = await plugin.focus.getFocusedRem();
+        if (focusedRem) {
+          textToUse = focusedRem.text;
+        } else {
+          return;
+        }
+      }
+
+      if (!textToUse || (Array.isArray(textToUse) && textToUse.length === 0)) {
+        setLastPartialWord(undefined);
+        return;
+      }
+
+      const prevLine: string | undefined = await plugin.richText.toMarkdown(
+        await plugin.richText.substring(textToUse, 0, selection.range.start)
+      );
+
+      const i = prevLine?.lastIndexOf("~");
+      if (i !== undefined && i >= 0) {
+        const lpw = prevLine.substring(i).toLowerCase();
+        setLastPartialWord(lpw);
+      } else {
+        setLastPartialWord(undefined);
+      }
+    } catch (e) {
+      console.warn("Failed to update last partial word:", e);
+    }
   };
 
   useAPIEventListener(
@@ -152,37 +178,34 @@ function AutocompletePopup() {
     }
   );
 
-  const [selectedIdx, setSelectedIdx] = R.useState(0);
+  const [selectedIdx, setSelectedIdx] = React.useState(0);
 
-  R.useEffect(() => {
+  React.useEffect(() => {
     if (!hidden) {
       setSelectedIdx(0);
     }
   }, [lastPartialWord]);
 
-  return (
-    <div className={clsx("p-[3px] rounded-lg", hidden && "hidden")}>
-      <div
-        className={clsx(
-          "flex flex-col content-start gap-[0.5] w-full box-border p-2",
-          "rounded-lg rn-clr-background-primary rn-clr-content-primary shadow-md border border-gray-100"
-        )}
-      >
-        {matches.map((word, idx) => (
-          <div
-            key={word.aliasId}
-            className={clsx(
-              "rounded-md p-2 truncate",
-              idx === selectedIdx && "rn-clr-background--hovered"
-            )}
-            onMouseEnter={() => setSelectedIdx(idx)}
-            onClick={() => selectResult(word)}
-          >
-            {word.text}
-          </div>
-        ))}
-      </div>
+  return (<div className={clsx("p-[3px] rounded-lg", hidden && "hidden")}>
+    <div className={clsx(
+      "flex flex-col content-start gap-[0.5] w-full box-border p-2",
+      "rounded-lg rn-clr-background-primary rn-clr-content-primary shadow-md border border-gray-100"
+    )}>
+      {matches.map((word, idx) => (
+        <div
+          key={word.aliasId}
+          className={clsx(
+            "rounded-md p-2 truncate",
+            idx === selectedIdx && "rn-clr-background--hovered"
+          )}
+          onMouseEnter={() => setSelectedIdx(idx)}
+          onClick={() => selectResult(word)}
+        >
+          {word.text}
+        </div>
+      ))}
     </div>
+  </div>
   );
 
   function selectAdjacentWord(direction: "up" | "down") {

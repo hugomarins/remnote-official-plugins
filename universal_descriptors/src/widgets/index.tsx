@@ -10,6 +10,7 @@ import {
   selectNextKeyId,
   selectPrevKeyId,
   insertSelectedKeyId,
+  universalDescriptorsHomeId,
 } from "../lib/constants";
 
 let lastFloatingWidgetId: string;
@@ -47,6 +48,12 @@ async function onActivate(plugin: ReactRNPlugin) {
     id: insertSelectedKeyId,
     title: "Insert Selected Shortcut",
     defaultValue: "tab",
+  });
+
+  await plugin.settings.registerStringSetting({
+    id: universalDescriptorsHomeId,
+    title: "Insert Universal Descriptors Home",
+    defaultValue: "~Universal Descriptors",
   });
 
   const openAutocompleteWindow = async () => {
