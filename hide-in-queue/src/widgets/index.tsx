@@ -117,6 +117,19 @@ async function onActivate(plugin: ReactRNPlugin) {
 	});
 
 	const runAddPowerupCommand = async (powerup: string) => {
+		const url = await plugin.window.getURL();
+		if (url.includes("/flashcards")) {
+			const currentQueueItem = await plugin.queue.getCurrentCard();
+			if (currentQueueItem?.remId) {
+				const rem = await plugin.rem.findOne(currentQueueItem.remId);
+				await rem?.addPowerup(powerup);
+				await plugin.app.toast("Powerup added to current card.");
+			} else {
+				await plugin.app.toast("Could not find a Rem to add powerup for.");
+			}
+			return;
+		}
+
 		const sel = await plugin.editor.getSelection();
 		const selType = sel?.type;
 		if (!selType) {
