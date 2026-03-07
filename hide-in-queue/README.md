@@ -1,7 +1,11 @@
 ## Features
 
-- Provides a "Hide in Queue" powerup that hides the tagged Rem in the queue.
-- Also provides a "Remove from Queue" powerup which removes the targged Rem from the hierarchy in the queue.
+- Provides a **"Hide in Queue"** powerup that hides the tagged Rem in the queue.
+- Provides a **"Remove from Queue"** powerup which removes the tagged Rem from the hierarchy in the queue.
+- Provides a **"No Hierarchy"** powerup which hides any ancestors on the front and back of the flashcard.
+- Provides a **"Hide Parent"** powerup which hides the immediate parent on the front of the flashcard.
+- Provides a **"Hide Grandparent"** powerup which hides the grandparent on the front of the flashcard.
+- **Queue Support:** All plugin commands (Hide in Queue, Remove from Queue, No Hierarchy, Hide Parent, Hide Grandparent) can be triggered directly while reviewing a flashcard in the Queue. They will automatically apply the powerup to the current card without needing to switch to the Editor.
 
 ## How to Use
 
@@ -18,6 +22,10 @@ Tag any Rem with "Hide in Queue" (using the command). Its content will be replac
 ### Remove from Queue
 
 Tag any Rem with "Remove from Queue" (using the command). Its content will be completely removed.
+
+**Differences between "Hide in Queue" and "Remove from Queue"**:
+- **Hide in Queue (`hiq`)**: The content is hidden, but the bullet point structure remains visible with a "Hidden in queue" ghosted label. Ideal when you want to acknowledge the structural presence of a parent but obscure its text.
+- **Remove from Queue (`rfq`)**: The Rem is completely removed from the visual hierarchy (`display: none`), and any children it has are shifted left to fill its space. Ideal for completely erasing an intermediate parent level as if it never existed.
 
 **Editor:**
 <br/>
