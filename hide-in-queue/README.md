@@ -11,7 +11,11 @@
 
 ### Hide In Queue
 
-Tag any Rem with "Hide in Queue" (using the command). Its content will be replaced with "Hidden in Queue":
+Tag any Rem with "Hide in Queue" (using the command). Its content will be replaced in the front of descendant flashcards with "Hidden in Queue":
+
+* The content of the tagged Rem is hidden, but _the bullet point itself remains visible_.
+* Instead of the text, a ghosted/faded label saying **"Hidden in queue"** appears next to the bullet.
+* Visual result: The user still sees the structural indentation and knows that something is there, but the actual information is obscured during the question phase (front of flashcard)(good for hiding hints, spoilers or context that would make retrieving the answer trivial).
 
 **Editor:**
 ![](https://i.imgur.com/06IHTFp.png)
@@ -21,7 +25,10 @@ Tag any Rem with "Hide in Queue" (using the command). Its content will be replac
 
 ### Remove from Queue
 
-Tag any Rem with "Remove from Queue" (using the command). Its content will be completely removed.
+Tag any Rem with "Remove from Queue" (using the command). Its content will be completely removed from the flashcard's visual hierarchy of its descendants.
+
+* Not only is the text gone, but any child Rems underneath it are pulled to the left, essentially collapsing the space.
+* _Visual result:_ It looks exactly as if that intermediate Rem never existed in your document hierarchy at all.
 
 **Differences between "Hide in Queue" and "Remove from Queue"**:
 - **Hide in Queue (`hiq`)**: The content is hidden, but the bullet point structure remains visible with a "Hidden in queue" ghosted label. Ideal when you want to acknowledge the structural presence of a parent but obscure its text.
