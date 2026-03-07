@@ -123,7 +123,7 @@ async function onActivate(plugin: ReactRNPlugin) {
 			if (currentQueueItem?.remId) {
 				const rem = await plugin.rem.findOne(currentQueueItem.remId);
 				await rem?.addPowerup(powerup);
-				await plugin.app.toast("Powerup added to current card.");
+				await plugin.app.toast("Powerup added (will take effect next time you see this card).");
 			} else {
 				await plugin.app.toast("Could not find a Rem to add powerup for.");
 			}
