@@ -30,10 +30,6 @@ Tag any Rem with "Remove from Queue" (using the command). Its content will be co
 * Not only is the text gone, but any child Rems underneath it are pulled to the left, essentially collapsing the space.
 * _Visual result:_ It looks exactly as if that intermediate Rem never existed in your document hierarchy at all.
 
-**Differences between "Hide in Queue" and "Remove from Queue"**:
-- **Hide in Queue (`hiq`)**: The content is hidden, but the bullet point structure remains visible with a "Hidden in queue" ghosted label. Ideal when you want to acknowledge the structural presence of a parent but obscure its text.
-- **Remove from Queue (`rfq`)**: The Rem is completely removed from the visual hierarchy (`display: none`), and any children it has are shifted left to fill its space. Ideal for completely erasing an intermediate parent level as if it never existed.
-
 **Editor:**
 <br/>
 ![](https://raw.githubusercontent.com/remnoteio/remnote-official-plugins/main/hide-in-queue/images/editor.png)
@@ -41,6 +37,11 @@ Tag any Rem with "Remove from Queue" (using the command). Its content will be co
 **Queue:**
 <br/>
 ![](https://raw.githubusercontent.com/remnoteio/remnote-official-plugins/main/hide-in-queue/images/queue.png)
+
+
+**Differences between "Hide in Queue" and "Remove from Queue"**:
+- **Hide in Queue (`hiq`)**: The content is hidden, but the bullet point structure remains visible with a "Hidden in queue" ghosted label. Ideal when you want to acknowledge the structural presence of a parent but obscure its text.
+- **Remove from Queue (`rfq`)**: The Rem is completely removed from the visual hierarchy (`display: none`), and any children it has are shifted left to fill its space. Ideal for completely erasing an intermediate parent level as if it never existed.
 
 ### No Hierarchy
 
