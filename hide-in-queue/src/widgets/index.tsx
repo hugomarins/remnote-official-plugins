@@ -117,19 +117,55 @@ async function onActivate(plugin: ReactRNPlugin) {
 	});
 
 	const runAddPowerupCommand = async (powerup: string) => {
-		const url = await plugin.window.getURL();
-		if (url.includes("/flashcards")) {
-			const currentQueueItem = await plugin.queue.getCurrentCard();
-			if (currentQueueItem?.remId) {
-				const rem = await plugin.rem.findOne(currentQueueItem.remId);
-				await rem?.addPowerup(powerup);
-				await plugin.app.toast("Powerup added (will take effect next time you see this card).");
+		// 1. Check if we are currently in the queue
+		const currentCard = await plugin.queue.getCurrentCard();
+
+		if (currentCard) {
+			// If in the queue, check if it's one of the problematic powerups
+			if (
+				powerup === HIDE_IN_QUEUE_POWERUP_CODE ||
+				powerup === REMOVE_FROM_QUEUE_POWERUP_CODE
+			) {
+				const powerupName =
+					powerup === HIDE_IN_QUEUE_POWERUP_CODE
+						? "Hide in Queue"
+						: "Remove from Queue";
+
+				// Show the warning popup with Cancel/OK buttons
+				const userConfirmed = window.confirm(
+					`Warning: "${powerupName}" is meant for parent/ancestor Rems, not the flashcard directly.\n\n` +
+					`Click "OK" to navigate to the parent Rem and apply the powerup there, or "Cancel" to abort.\n\n` +
+					`Consider these alternatives if you want to affect ONLY this flashcard, not others descendants from the same ancestor:\n` +
+					`  "Hide Parent"\n` +
+					`  "Hide Grandparent"\n\n`
+				);
+
+				if (userConfirmed) {
+					const rem = await plugin.rem.findOne(currentCard.remId);
+					const parent = await rem?.getParentRem();
+
+					if (parent) {
+						// Apply powerup to parent
+						await parent.addPowerup(powerup);
+						await plugin.app.toast(`Applied "${powerupName}" to parent.`);
+					} else {
+						await plugin.app.toast("Could not find a parent Rem.");
+					}
+				}
+				// Abort applying it to the current card regardless of user choice
+				return;
 			} else {
-				await plugin.app.toast("Could not find a Rem to add powerup for.");
+				// For noHierarchy, hideParent, hideGrandparent: apply directly to current flashcard
+				const rem = await plugin.rem.findOne(currentCard.remId);
+				await rem?.addPowerup(powerup);
+				await plugin.app.toast(
+					"Powerup added (will take effect next time you see this card)."
+				);
+				return;
 			}
-			return;
 		}
 
+		// 2. Fallback to standard editor logic if not in the queue
 		const sel = await plugin.editor.getSelection();
 		const selType = sel?.type;
 		if (!selType) {
