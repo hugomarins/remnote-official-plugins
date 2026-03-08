@@ -5,7 +5,9 @@
 - Provides a **"No Hierarchy"** powerup which hides any ancestors on the front and back of the flashcard.
 - 🆕 Provides a **"Hide Parent"** powerup which hides the immediate parent on the front of the flashcard.
 - 🆕 Provides a **"Hide Grandparent"** powerup which hides the grandparent on the front of the flashcard.
-- 🆕 **Queue Support:** All plugin commands (Hide in Queue, Remove from Queue, No Hierarchy, Hide Parent, Hide Grandparent) can be triggered directly while reviewing a flashcard in the Queue. They will automatically apply the powerup to the current card without needing to switch to the Editor.
+- 🆕 **Queue Support:** All plugin commands can be triggered directly while reviewing a flashcard in the Queue without needing to switch to the Editor.
+  * **No Hierarchy, Hide Parent, and Hide Grandparent:** Automatically apply the powerup directly to the current card.
+  * **Hide in Queue and Remove from Queue:** Since these are designed to be applied to parent/ancestor Rems rather than the flashcard itself, triggering them will open a prompt. You can choose to apply the intended powerup to the card's parent Rem.
 
 ## How to Use
 
