@@ -47,7 +47,7 @@ const config = {
       {
         test: /\.css$/i,
         use: [
-          MiniCssExtractPlugin.loader,
+          isDevelopment ? "style-loader" : MiniCssExtractPlugin.loader,
           { loader: "css-loader", options: { url: false } },
           "postcss-loader",
         ],
@@ -55,8 +55,8 @@ const config = {
     ],
   },
   plugins: [
-    new MiniCssExtractPlugin({
-      filename: "App.css",
+    isDevelopment ? undefined : new MiniCssExtractPlugin({
+      filename: '[name].css',
     }),
     new HtmlWebpackPlugin({
       templateContent: `
@@ -82,14 +82,14 @@ const config = {
     }),
     new BannerPlugin({
       banner: (file) => {
-        return !file.chunk.name.includes(SANDBOX_SUFFIX)
-          ? "const IMPORT_META=import.meta;"
-          : "";
+        return !file.chunk.name.includes(SANDBOX_SUFFIX) ? 'const IMPORT_META=import.meta;' : '';
       },
       raw: true,
     }),
     new CopyPlugin({
-      patterns: [{ from: "public", to: "" }],
+      patterns: [
+        {from: 'public', to: '' }
+      ],
     }),
     fastRefresh,
   ].filter(Boolean),
