@@ -63,13 +63,13 @@ Tag any Rem with "Hide Parent" (using the command `Hide Parent` or `/hp`). Its i
 
 **Editor:**
 <br/>
-![](https://raw.githubusercontent.com/remnoteio/remnote-official-plugins/main/hide-in-queue/images/hide-parent-editor.png)
+![](https://raw.githubusercontent.com/hugomarins/remnote-official-plugins/main/hide-in-queue/images/hide-parent-editor.png)
 
 **Queue:**
 <br/>
-![](https://raw.githubusercontent.com/remnoteio/remnote-official-plugins/main/hide-in-queue/images/hide-parent-queue-question.png)
+![](https://raw.githubusercontent.com/hugomarins/remnote-official-plugins/main/hide-in-queue/images/hide-parent-queue-question.png)
 
-![](https://raw.githubusercontent.com/remnoteio/remnote-official-plugins/main/hide-in-queue/images/hide-parent-queue-answer.png)
+![](https://raw.githubusercontent.com/hugomarins/remnote-official-plugins/main/hide-in-queue/images/hide-parent-queue-answer.png)
 
 
 ### Hide Grandparent 🆕
@@ -78,13 +78,13 @@ Tag any Rem with "Hide Grandparent" (using the command `Hide Grandparent` or `/h
 
 **Editor:**
 <br/>
-![](https://raw.githubusercontent.com/remnoteio/remnote-official-plugins/main/hide-in-queue/images/hide-grandparent-editor.png)
+![](https://raw.githubusercontent.com/hugomarins/remnote-official-plugins/main/hide-in-queue/images/hide-grandparent-editor.png)
 
 **Queue:**
 <br/>
-![](https://raw.githubusercontent.com/remnoteio/remnote-official-plugins/main/hide-in-queue/images/hide-grandparent-queue-question.png)
+![](https://raw.githubusercontent.com/hugomarins/remnote-official-plugins/main/hide-in-queue/images/hide-grandparent-queue-question.png)
 
-![](https://raw.githubusercontent.com/remnoteio/remnote-official-plugins/main/hide-in-queue/images/hide-grandparent-queue-answer.png)
+![](https://raw.githubusercontent.com/hugomarins/remnote-official-plugins/main/hide-in-queue/images/hide-grandparent-queue-answer.png)
 
 ## Developers
 
