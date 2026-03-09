@@ -1,5 +1,5 @@
 import * as Re from 'remeda';
-import {Rem, RichTextInterface} from '@remnote/plugin-sdk';
+import { PluginRem as Rem, RichTextInterface } from '@remnote/plugin-sdk';
 
 // Get all text from the Rem including both its text and back text
 // and add it all to one RichTextInterface array.
