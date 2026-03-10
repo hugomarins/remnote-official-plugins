@@ -60,8 +60,8 @@ const config = {
 		isDevelopment
 			? undefined
 			: new MiniCssExtractPlugin({
-					filename: "[name].css",
-				}),
+				filename: "[name].css",
+			}),
 		new HtmlWebpackPlugin({
 			templateContent: `
 			<body></body>
@@ -96,7 +96,16 @@ const config = {
 			patterns: [
 				{ from: "public", to: "" },
 				{ from: "README.md", to: "" },
-				// { from: 'src/widgets/app.css', to: ''}
+				{
+					from: "src/style.css",
+					to: "snippet.css",
+					noErrorOnMissing: true,
+				},
+				{
+					from: "src/style.css",
+					to: "App.css",
+					noErrorOnMissing: true,
+				},
 			],
 		}),
 		fastRefresh,
