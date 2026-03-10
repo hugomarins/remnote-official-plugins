@@ -93,3 +93,8 @@ This plugin is an example plugin built by the RemNote team to demonstrate how to
 If you are interested in building your own plugins, taking a look through the source code for this plugin (as well as the other example plugins and plugins built by the community) would be a great starting point. Of course, you should also check out the official documentation, guides and tutorials on our [plugin website](https://plugins.remnote.com/).
 
 If you are new to writing plugins, we recommend checking out the [dictionary plugin project tutorial](https://plugins.remnote.com/in-depth-tutorial/overview).
+
+## Changelog
+
+#### v0.1.4 (2026-03-10)
+- **Fix:** Fixed a bug where powerup commands executed while previewing a document (via "Preview Document" `P`) would mistakenly apply to the background queue flashcard instead of the focused editor selection. The command logic is now fully selection-aware.

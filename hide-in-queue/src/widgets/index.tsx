@@ -117,57 +117,71 @@ async function onActivate(plugin: ReactRNPlugin) {
 	});
 
 	const runAddPowerupCommand = async (powerup: string) => {
-		// 1. Check if we are currently in the queue
+		// 1. Check if we are currently in the queue AND targeting the flashcard
+		const url = await plugin.window.getURL();
 		const currentCard = await plugin.queue.getCurrentCard();
+		const sel = await plugin.editor.getSelection();
+		const selType = sel?.type;
 
-		if (currentCard) {
-			// If in the queue, check if it's one of the problematic powerups
-			if (
-				powerup === HIDE_IN_QUEUE_POWERUP_CODE ||
-				powerup === REMOVE_FROM_QUEUE_POWERUP_CODE
-			) {
-				const powerupName =
-					powerup === HIDE_IN_QUEUE_POWERUP_CODE
-						? "Hide in Queue"
-						: "Remove from Queue";
+		if (url.includes("/flashcards") && currentCard) {
+			let isTargetingCurrentCard = false;
+			if (!selType) {
+				// No active text/rem selection (e.g. pressed a queue keyboard shortcut)
+				isTargetingCurrentCard = true;
+			} else if (selType === SelectionType.Rem && sel.remIds.includes(currentCard.remId)) {
+				// Selected the flashcard rem explicitly
+				isTargetingCurrentCard = true;
+			} else if (selType === SelectionType.Text && sel.remId === currentCard.remId) {
+				// Editing the text of the flashcard rem explicitly
+				isTargetingCurrentCard = true;
+			}
 
-				// Show the warning popup with Cancel/OK buttons
-				const userConfirmed = window.confirm(
-					`Warning: "${powerupName}" is meant for parent/ancestor Rems, not the flashcard directly.\n\n` +
-					`Click "OK" to navigate to the parent Rem and apply the powerup there, or "Cancel" to abort.\n\n` +
-					`Consider these alternatives if you want to affect ONLY this flashcard, not others descendants from the same ancestor:\n` +
-					`  "Hide Parent"\n` +
-					`  "Hide Grandparent"\n\n`
-				);
+			if (isTargetingCurrentCard) {
+				// If in the queue, check if it's one of the problematic powerups
+				if (
+					powerup === HIDE_IN_QUEUE_POWERUP_CODE ||
+					powerup === REMOVE_FROM_QUEUE_POWERUP_CODE
+				) {
+					const powerupName =
+						powerup === HIDE_IN_QUEUE_POWERUP_CODE
+							? "Hide in Queue"
+							: "Remove from Queue";
 
-				if (userConfirmed) {
-					const rem = await plugin.rem.findOne(currentCard.remId);
-					const parent = await rem?.getParentRem();
+					// Show the warning popup with Cancel/OK buttons
+					const userConfirmed = window.confirm(
+						`Warning: "${powerupName}" is meant for parent/ancestor Rems, not the flashcard directly.\n\n` +
+						`Click "OK" to navigate to the parent Rem and apply the powerup there, or "Cancel" to abort.\n\n` +
+						`Consider these alternatives if you want to affect ONLY this flashcard, not others descendants from the same ancestor:\n` +
+						`  "Hide Parent"\n` +
+						`  "Hide Grandparent"\n\n`
+					);
 
-					if (parent) {
-						// Apply powerup to parent
-						await parent.addPowerup(powerup);
-						await plugin.app.toast(`Applied "${powerupName}" to parent.`);
-					} else {
-						await plugin.app.toast("Could not find a parent Rem.");
+					if (userConfirmed) {
+						const rem = await plugin.rem.findOne(currentCard.remId);
+						const parent = await rem?.getParentRem();
+
+						if (parent) {
+							// Apply powerup to parent
+							await parent.addPowerup(powerup);
+							await plugin.app.toast(`Applied "${powerupName}" to parent.`);
+						} else {
+							await plugin.app.toast("Could not find a parent Rem.");
+						}
 					}
+				} else {
+					// For noHierarchy, hideParent, hideGrandparent: apply directly to current flashcard
+					const rem = await plugin.rem.findOne(currentCard.remId);
+					await rem?.addPowerup(powerup);
+					await plugin.app.toast(
+						"Powerup added (will take effect next time you see this card)."
+					);
 				}
 				// Abort applying it to the current card regardless of user choice
-				return;
-			} else {
-				// For noHierarchy, hideParent, hideGrandparent: apply directly to current flashcard
-				const rem = await plugin.rem.findOne(currentCard.remId);
-				await rem?.addPowerup(powerup);
-				await plugin.app.toast(
-					"Powerup added (will take effect next time you see this card)."
-				);
 				return;
 			}
 		}
 
 		// 2. Fallback to standard editor logic if not in the queue
-		const sel = await plugin.editor.getSelection();
-		const selType = sel?.type;
 		if (!selType) {
 			return;
 		}
